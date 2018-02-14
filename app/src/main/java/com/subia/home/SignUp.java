@@ -149,6 +149,7 @@ public class SignUp extends AppCompatActivity {
         }){
             @Override
             protected Map<String,String> getParams(){
+                //here we  send parametrs to API
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("firstName",firstName.getText().toString());
                 params.put("lastName",lastName.getText().toString());
