@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">HOME</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="fnameerr">Enter your name</string>
+    <string name="lnameerr">Enter your last name</string>
+    <string name="emailerr">Enter valid email</string>
+    <string name="phnerr">Enter correct mobile no.</string>
+    <string name="pwderr">Enter password</string>
+    <string name="cnfpwerr">Password does not match</string>
+    <string-array name="Business">
+        <item>Select</item>
+        <item>Hospital</item>
+        <item>Laboratory</item>
+        <item>Chemist Store</item>
+    </string-array>
+    <string name="Select_country">Select country</string>
+    <string-array name="country">
+        <item>India</item>
+        <item>Pakistan</item>
+        <item>China</item>
+        <item>Bangladesh</item>
+        <item>Srilanka</item>
+
+
+    </string-array>
+
+
+    <string-array name="user_type">
+        <item>Select</item>
+        <item>Patient</item>
+        <item>Doctor</item>
+        <item>Business</item>
+
+    </string-array>
+</resources>
