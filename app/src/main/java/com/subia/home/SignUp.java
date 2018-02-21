@@ -35,6 +35,8 @@ public class SignUp extends AppCompatActivity {
     private SharedPreferences pref;
     public static final String mypreference = "loginPref";
     public static final String UID = "userId";
+    public static final String BID = "businessId";
+    public static final String DID = "doctorId";
     public static final String FIRSTNAME = "firstName";
     public static final String LASTNAME = "lastName";
     public static final String EMAIL = "email";
@@ -118,8 +120,9 @@ public class SignUp extends AppCompatActivity {
                                 editor.putString(EMAIL,array.getString("email"));
                                 editor.putString(FIRSTNAME,array.getString("firstName"));
                                 editor.putString(LASTNAME,array.getString("lastName"));
-                                //editor.putInt(UID,array.getInt("uid"));
+                                editor.putInt(UID,array.getInt("uid"));
                                 editor.putInt(STATUS,array.getInt("status_code"));
+                                editor.putInt(BID,array.getInt("bid"));
                                 editor.commit();
                                 if(user_type==1){
                                     Intent intent = new Intent(SignUp.this,MainActivity.class);
@@ -149,7 +152,6 @@ public class SignUp extends AppCompatActivity {
         }){
             @Override
             protected Map<String,String> getParams(){
-                //here we  send parametrs to API
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("firstName",firstName.getText().toString());
                 params.put("lastName",lastName.getText().toString());

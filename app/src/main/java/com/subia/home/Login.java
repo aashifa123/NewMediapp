@@ -32,6 +32,9 @@ public class Login extends AppCompatActivity {
     public static final String LASTNAME = "lastName";
     public static final String EMAIL = "email";
     public static final String STATUS = "statusCode";
+    public static final String PHONENUM = "PhoneNumber";
+    public static final String ISBUSINESS = "isBusiness";
+    public static final String ISDOCTOR = "isDoctor";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +75,7 @@ public class Login extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                       // Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
+                       //Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
                         try{
                             JSONObject array = new JSONObject(response);
                             if(array.getInt("status_code")==1){
@@ -80,12 +83,30 @@ public class Login extends AppCompatActivity {
                                 editor.putString(EMAIL,array.getString("email"));
                                 editor.putString(FIRSTNAME,array.getString("firstName"));
                                 editor.putString(LASTNAME,array.getString("lastName"));
-                                //editor.putInt(UID,array.getInt("uid"));
+                                editor.putString(ISBUSINESS,array.getString("isBusiness"));
+                                editor.putString(ISDOCTOR,array.getString("isDoctor"));
+                                editor.putInt(UID,array.getInt("uid"));
                                 editor.putInt(STATUS,array.getInt("status_code"));
+                                editor.putString(PHONENUM,array.getString("phoneNum"));
                                 editor.commit();
-                               Intent intent = new Intent(Login.this,MainActivity.class);
-                              startActivity(intent);
-                               // Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
+                               if((array.getInt("isBusiness")== 0)&&(array.getInt("isDoctor")==0)){
+                                   Intent intent = new Intent(Login.this,MainActivity.class);
+                                   startActivity(intent);
+                                   //Toast.makeText(getApplicationContext(),array.getInt("isBusiness")+" "+array.getInt("isDoctor"), Toast.LENGTH_LONG).show();
+                               }
+                               else if(array.getInt("isDoctor")==1){
+                                   Toast.makeText(getApplicationContext(),"Doctor Login",Toast.LENGTH_LONG).show();
+                               }
+                               else if(array.getInt("isBusiness")==1){
+                                  Intent intent = new Intent(Login.this,Business.class);
+                                   startActivity(intent);
+                               //  Toast.makeText(getApplicationContext(),"Business Login",Toast.LENGTH_LONG).show();
+                               }
+                               else{
+                                   Toast.makeText(getApplicationContext(),"Not A Valid Choice",Toast.LENGTH_LONG).show();
+
+                               }
+                               //Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
                             }
                             else{
                                 Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();

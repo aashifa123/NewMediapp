@@ -5,19 +5,21 @@
     tools:context="com.subia.home.Login"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-
+android:background="@drawable/light"
     >
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.subia.home.Login">
+        tools:context="com.subia.home.Login"
+        >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:layout_marginTop="40dp">
 
         <LinearLayout
             android:layout_width="match_parent"

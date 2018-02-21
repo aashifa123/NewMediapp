@@ -128,7 +128,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
     public void addBusiness(View view) {
         Intent i = new Intent(MainActivity.this, Business.class);
         startActivity(i);
