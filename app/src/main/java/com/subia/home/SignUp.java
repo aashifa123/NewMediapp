@@ -1,5 +1,6 @@
 package com.subia.home;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +30,7 @@ import java.util.Map;
 public class SignUp extends AppCompatActivity {
     Spinner spinner;
     ArrayAdapter<CharSequence> adapter;
+    ProgressDialog progressDialog;
     private EditText firstName,lastName,email,password,confirmPassword,phoneNum;
     private StringRequest stringRequest;
     AwesomeValidation awesomeValidation;
@@ -48,7 +50,6 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
         spinner = (Spinner)findViewById(R.id.spinner4);
         init();
-
         adapter = ArrayAdapter.createFromResource(this, R.array.user_type, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -86,10 +87,15 @@ public class SignUp extends AppCompatActivity {
         confirmPassword=(EditText)findViewById(R.id.confirmPassword);
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         pref=getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        progressDialog=new ProgressDialog(SignUp.this);
+        progressDialog.setMessage("Signing Up");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setIndeterminate(true);
+      //  progressDialog.setProgress(0);
         validations();
     }
     private void validations(){
-        String regexPassword = "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*[~`!@#\\$%\\^&\\*\\(\\)\\-_\\+=\\{\\}\\[\\]\\|\\;:\"<>,./\\?]).{8,}";
+        String regexPassword = "^.*(?=.{3,10})(?=.*\\d)(?=.*[a-zA-Z]).*$";
         awesomeValidation.addValidation(SignUp.this,R.id.firstName,"[a-zA-Z\\s]+",R.string.fnameerr);
         awesomeValidation.addValidation(SignUp.this,R.id.lastName,"[a-zA-Z\\s]+",R.string.lnameerr);
         awesomeValidation.addValidation(SignUp.this,R.id.email, android.util.Patterns.EMAIL_ADDRESS,R.string.emailerr);
@@ -108,6 +114,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void addUser() {
+        progressDialog.show();
         stringRequest = new StringRequest(Request.Method.POST, Constants.signupUrl,
                 new Response.Listener<String>() {
                     @Override
@@ -125,28 +132,34 @@ public class SignUp extends AppCompatActivity {
                                 editor.putInt(BID,array.getInt("bid"));
                                 editor.commit();
                                 if(user_type==1){
+                                    progressDialog.dismiss();
                                     Intent intent = new Intent(SignUp.this,MainActivity.class);
                                     startActivity(intent);
                                 }
                                  else if(user_type==2){
+                                    progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(),"Yet To Implement",Toast.LENGTH_LONG).show();
                                 }
                                 else{
+                                    progressDialog.dismiss();
                                     Intent intent = new Intent(SignUp.this,Business.class);
                                     startActivity(intent);
                                 }
                                 //Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
                             }
                             else{
-                                Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
+                                progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(),"User Login Unsuccesfull",Toast.LENGTH_LONG).show();
                             }
                         }catch(Exception e){
+                            progressDialog.dismiss();
                             e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(),"Error "+error.toString(),Toast.LENGTH_LONG).show();
             }
         }){
